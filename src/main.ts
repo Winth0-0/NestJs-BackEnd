@@ -8,8 +8,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
   dotenv.config();
   const config = new DocumentBuilder()
-    .setTitle('API DDC.PINK.FROM')
-    .setDescription('BY Meiosys')
+    .setTitle('API Test')
+    .setDescription('BY Thawin Hlungkaew')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
