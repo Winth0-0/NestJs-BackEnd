@@ -1,16 +1,41 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-@Entity('authors')
-export class Author {
+@Entity('usr') 
+export class Authors {
   @PrimaryGeneratedColumn()
-  id: number; // รหัสผู้แต่ง
+  id: number;
 
-  @Column({ type: 'varchar', length: 100 })
-  first_name: string; // ชื่อ
+  @Column({ length: 50 })
+  usrcode: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  last_name: string; // นามสกุล
+  @Column({ name: 'fristname', length: 100 })
+  fristname: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  pen_name: string; // นามปากกา (ถ้ามี)
+  @Column({ length: 100 })
+  lastname: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  row: string;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  timestamp: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  update: Date;
+}
+
+
+export class LoginDto {
+  @ApiProperty()
+  @IsString()
+  usrcode: string;
+  
+  @ApiProperty()
+  @IsString()
+  password: string;
 }
