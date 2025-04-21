@@ -131,7 +131,7 @@ export class StockService {
       );
 
       if (!stock || stock.length === 0) {
-        throw new HttpException('No promotions found', HttpStatus.NOT_FOUND);
+        return [];
       }
 
       return Array.from(stock);
@@ -145,7 +145,7 @@ export class StockService {
   async GetSummary(): Promise<any> {
     try {
       const stock = await this.stockRepository.query(
-        `
+             `
             SELECT 
             YEAR(timecreate) AS year,
             MONTH(timecreate) AS month,
@@ -157,7 +157,7 @@ export class StockService {
       );
 
       if (!stock || stock.length === 0) {
-        throw new HttpException('No promotions found', HttpStatus.NOT_FOUND);
+        return [];
       }
 
       return stock;
@@ -290,6 +290,9 @@ export class StockService {
       const stock = await this.stockRepository.query(
         `SELECT * FROM apitestd_lsstock.histPromotion WHERE DATE(timestamp) = CURDATE();`
       );
+      if (!stock || stock.length === 0) {
+        return []
+      }
       return stock;
     } catch (error) {
       console.error('DB error:', error);
