@@ -117,16 +117,16 @@ export class StockService {
         `
         SELECT 
   ROUND((SELECT SUM(totalprice) 
-         FROM HistOrder 
+         FROM apitestd_lsstock.HistOrder 
          WHERE YEAR(timecreate) = YEAR(CURRENT_DATE) 
          AND MONTH(timecreate) = MONTH(CURRENT_DATE)), 2) AS salesthismonth,
 
   ROUND((SELECT SUM(totalprice) 
-         FROM HistOrder 
+         FROM apitestd_lsstock.HistOrder 
          WHERE YEAR(timecreate) = CASE WHEN MONTH(CURRENT_DATE) = 1 THEN YEAR(CURRENT_DATE) - 1 ELSE YEAR(CURRENT_DATE) END
          AND MONTH(timecreate) = CASE WHEN MONTH(CURRENT_DATE) = 1 THEN 12 ELSE MONTH(CURRENT_DATE) - 1 END), 2) AS saleslastmonth,
 
-  ROUND((SELECT SUM(totalprice) FROM HistOrder), 2) AS totalsales;
+  ROUND((SELECT SUM(totalprice) FROM apitestd_lsstock.HistOrder), 2) AS totalsales;
          `
       );
   
@@ -150,7 +150,7 @@ export class StockService {
             YEAR(timecreate) AS year,
             MONTH(timecreate) AS month,
             ROUND(SUM(totalprice), 2) AS total_sum
-            FROM HistOrder
+            FROM apitestd_lsstock.HistOrder
             GROUP BY YEAR(timecreate), MONTH(timecreate)
             ORDER BY year, month;
              `
@@ -274,7 +274,7 @@ export class StockService {
     async GetOrderNow(): Promise<any> {
         try {
           const stock = await this.stockRepository.query(
-            `SELECT * FROM historder WHERE DATE(timecreate) = CURDATE();`
+            `SELECT * FROM apitestd_lsstock.historder WHERE DATE(timecreate) = CURDATE();`
           );
           return stock;
       
@@ -286,7 +286,7 @@ export class StockService {
       async GetPromotionNow(): Promise<any> {
         try {
           const stock = await this.stockRepository.query(
-            `SELECT * FROM histPromotion WHERE DATE(timestamp) = CURDATE();`
+            `SELECT * FROM apitestd_lsstock.histPromotion WHERE DATE(timestamp) = CURDATE();`
           );
           return stock;
         } catch (error) {
